@@ -10,6 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/MikeJ58/sit725-2023-t1-prac3.git"
   },
+  "keywords": [
+    "Nodejs",
+    "Express",
+    "Materialize",
+    "HTML",
+    "JS",
+    "CSS"
+  ],
+
   "author": "MikeJ58",
   "license": "MIT",
   "bugs": {
