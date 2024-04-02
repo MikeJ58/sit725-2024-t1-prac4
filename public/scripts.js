@@ -1,31 +1,23 @@
 const cardList = [
     {
-        title: "Kitten 2",
-        image: "images/kitten-2.jpg",
-        link: "About Kitten 2",
-        description: "Demo description about kitten 2"
+        title: "Aston Martin",
+        image: "images/aston_martin.jpeg",
+        link: "About Car 1",
+        description: "Demo description about Car 1"
     },
     {
-        title: "Kitten 3",
-        image: "images/kitten-3.jpg",
-        link: "About Kitten 3",
-        description: "Demo description about kitten 3"
+        title: "Porche",
+        image: "images/ferarri.jpeg",
+        link: "About Car 2",
+        description: "Demo description about Car 2"
+    },
+    {
+        title: "Ferarri",
+        image: "images/porche.jpeg",
+        link: "About Car 3",
+        description: "Demo description about Car 3"
     }
 ];
-
-const clickMe = () => {
-    alert("Thanks for clicking me. Hope you have a nice day!");
-};
-
-const submitForm = () => {
-    let formData = {
-        first_name: $('#first_name').val(),
-        last_name: $('#last_name').val(),
-        password: $('#password').val(),
-        email: $('#email').val()
-    };
-    console.log("Form Data Submitted: ", formData);
-};
 
 const addCards = (items) => {
     items.forEach(item => {
@@ -49,7 +41,7 @@ const addCards = (items) => {
     });
 };
 
-$(document).ready(function(){
+$(document).ready(function () {
     $('.materialboxed').materialbox();
     $('#formSubmit').click(() => {
         submitForm();
@@ -57,3 +49,6 @@ $(document).ready(function(){
     addCards(cardList);
     $('.modal').modal();
 });
+
+
+
