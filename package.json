@@ -1,0 +1,22 @@
+{
+  "name": "sit725-2023-t1-prac3",
+  "version": "1.0.0",
+  "description": "SIT 725 T1 Week 2 Prac",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikeJ58/sit725-2023-t1-prac3.git"
+  },
+  "author": "MikeJ58",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MikeJ58/sit725-2023-t1-prac3.git/issues"
+  },
+  "homepage": "https://github.com/MikeJ58/sit725-2023-t1-prac3.git#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
