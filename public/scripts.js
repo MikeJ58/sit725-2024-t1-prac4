@@ -41,14 +41,24 @@ const addCards = (items) => {
     });
 };
 
-$(document).ready(function () {
+$(document).ready(function(){
     $('.materialboxed').materialbox();
-    $('#formSubmit').click(() => {
-        submitForm();
-    });
-    addCards(cardList);
+    $('#formSubmit').click(()=>{
+    submitForm();
+    })
+    getProjects();
     $('.modal').modal();
-});
+    });
+    
+
+const getProjects = () => {
+    $.get('/api/projects',(response) => {
+    if(response.statusCode==200){
+    addCards(response.data);
+    }
+    })
+    }
+    
 
 
 
