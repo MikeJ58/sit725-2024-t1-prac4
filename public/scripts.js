@@ -41,6 +41,25 @@ const addCards = (items) => {
     });
 };
 
+const clickMe = () => {
+
+alert("Thanks for clicking me. Hope you have a nice day!")
+}
+const submitForm = () => {
+    let formData = {};
+    formData.first_name = $('#first_name').val();
+    formData.last_name = $('#last_name').val();
+    formData.password = $('#password').val();
+    formData.email = $('#email').val();
+    console.log("Form Data Submitted: ", formData);
+}
+const addCards = (items) => {
+    items.forEach(item => {
+        let itemToAppend = '<div class="col s4 center-align">'+
+        '<div class="card medium"> <div class="card-image waves-effect waves-block waves-light"><img class="activator" src="'+item.image+'">'+
+    })
+}
+
 $(document).ready(function(){
     $('.materialboxed').materialbox();
     $('#formSubmit').click(()=>{

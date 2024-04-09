@@ -1,60 +1,63 @@
 var express = require("express")
+const { MongoClient, ServerApiVersion } = require('mongodb');
 var app = express()
+const url =
+  ""
+var port = process.env.port || 3000;
+let collection;
 app.use(express.static(__dirname + '/public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-const cardList = [
-  {
-    title: "Kitten 2",
-    image: "images/kitten-2.jpg",
-    link: "About Kitten 2",
-    desciption: "Demo desciption about kitten 2"
-  },
-  {
-    title: "Kitten 3",
-    image: "images/kitten-3.jpg",
-    link: "About Kitten 3",
-    desciption: "Demo desciption about kitten 3"
+
+const client = new MongoClient(url, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
   }
-]
-app.get('/api/projects', (req, res) => {
-  res.json({ statusCode: 200, data: cardList, message: "Success" })
-})
-var port = process.env.port || 3000;
-app.listen(port, () => {
-  console.log("App listening to: " + port)
-})
-
-// Require the MongoDB client
-const MongoClient = require('mongodb').MongoClient;
-
-// Connection URL and database name
-const url = 'mongodb://localhost:3000';
-const dbName = 'mydatabase';
-
-// Connect to the MongoDB server
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, client) {
-    if(err) {
-        console.error('Error occurred while connecting to MongoDB:', err);
-        return;
-    }
-    console.log('Connected successfully to server');
-
-    const db = client.db(dbName);
-
-    // Get the collection
-    const collection = db.collection('mycollection');
-
-    // Find some documents
-    collection.find({}).toArray(function(err, docs) {
-        if(err) {
-            console.error('Error occurred while fetching documents:', err);
-            return;
-        }
-        console.log('Found the following documents:');
-        console.log(docs);
-        
-        // Close the client connection
-        client.close();
-    });
 });
+
+async function runDBConnection() {
+
+  try {
+    // connect the client to the server (optional starting in v4.7)
+    await client.connect();
+    collection = client.db().collection('Cars');
+    console.log(collection);
+  } catch (ex) {
+    console.error(ex);
+  }
+}
+app.get('/', (req, res) => {
+  res.render('index.html');
+});
+app.get('/api/cards', (req, res) => {
+  getAllCars((err, result) => {
+    if (!err) {
+      res.json({ statusCode: 200, data: result, message: "Managed to get all Cars!" })
+    }
+  });
+});
+
+app.post('/api/Cars', (req, res) => {
+  let Cars = req.body;
+  postCars(Cars, (err, result) => {
+    if (err) {
+      res.json({ statusCode: 200, data: result, message: 'success' })
+    }
+  });
+});
+
+function postCars(Cars, callback) {
+  collection.insertOne(Cars, callback);
+
+}
+
+function getAllCars(callback) {
+  collection.find({}).toArray(callback);
+}
+
+app.listen(3000, () => {
+  console.log('express server started on port 3000');
+  runDBConnection();
+})
