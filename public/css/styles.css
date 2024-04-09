@@ -19,5 +19,7 @@ navbar-size {
     background-color: #EE6E73;
     margin-top: 50px;
     }
-    
+    .card-content, .card-reveal {
+        color: black; /* Change text color to black */
+    }
     

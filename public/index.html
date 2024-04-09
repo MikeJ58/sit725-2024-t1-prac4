@@ -6,7 +6,7 @@
     <title>Card List</title>
     <!-- Include Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="styles.css"> <!-- Your custom styles -->
+    <link rel="stylesheet" href="/public/css/styles.css"> <!-- Your custom styles -->
 </head>
 <body>
     <nav>
@@ -26,67 +26,98 @@
                 </div>
             </div>
             <div class="col s12 center-align">
-                <a class="waves-effect waves-light btn click-me-button" id="clickMeButton"><i class="material-icons left">auto_fix_high</i>Click Me!</a>
+                <!-- Added modal-trigger class to the button -->
+                <a class="waves-effect waves-light btn modal-trigger" href="#modalForm" id="clickMeButton"><i class="material-icons left"></i>Click Me!</a>
             </div>
-            <!-- Row for the cards -->
-            <div class="row">
-                <!-- First Card -->
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/aston_martin.jpeg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Aston Martin<i class="material-icons right">More</i></span>
-                            <p><a href="#">About this Car</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Close</span>
-                            <p class="card-text">This is the Aston Martin, a car developed in England, it is an amazing looking car!</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Second Card -->
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/porche.jpeg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Porche<i class="material-icons right">More</i></span>
-                            <p><a href="#">About this Car</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Close </span>
-                            <p class="card-text">Porsche, is a German automobile manufacturer specializing in high-performance sports cars, SUVs and sedans. It is made in Germany.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Third Card -->
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/ferarri.jpeg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Ferarri<i class="material-icons right">More</i></span>
-                            <p><a href="#">About this Car</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Close </span>
-                            <p class="card-text">This is the Ferarri, it is an Italian luxury sports car manufacturer based in Maranello, Italy. Founded in 1939 by Enzo Ferrari!</p>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- End of Row for the cards -->
         </div>
+
+        <!-- Modal Structure -->
+        <div id="modalForm" class="modal">
+            <div class="modal-content">
+                <h4>Enter Car Details</h4>
+                <form id="carForm">
+                    <div class="input-field">
+                        <input id="title" type="text" class="validate" placeholder="Title">
+                    </div>
+                    <div class="input-field">
+                        <input id="Color" type="text" class="validate" placeholder="Color">
+                    </div>
+                    <div class="input-field">
+                        <input id="Path" type="text" class="validate" placeholder="Path">
+                    </div>
+                    <div class="input-field">
+                        <input id="Description" type="text" class="validate" placeholder="Description">
+                    </div>
+                    <button type="submit" class="waves-effect waves-light btn">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Row for the cards -->
+        <div class="row">
+            <!-- First Card -->
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="images/aston_martin.jpeg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Aston Martin<i class="material-icons right">More</i></span>
+                        <p><a href="#">About this Car</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Close</span>
+                        <p class="card-text">This is the Aston Martin, a car developed in England, it is an amazing looking car!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Second Card -->
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="images/porche.jpeg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Porche<i class="material-icons right">More</i></span>
+                        <p><a href="#">About this Car</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Close </span>
+                        <p class="card-text">Porsche, is a German automobile manufacturer specializing in high-performance sports cars, SUVs and sedans. It is made in Germany.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Third Card -->
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="images/ferarri.jpeg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Ferarri<i class="material-icons right">More</i></span>
+                        <p><a href="#">About this Car</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Close </span>
+                        <p class="card-text">This is the Ferarri, it is an Italian luxury sports car manufacturer based in Maranello, Italy. Founded in 1939 by Enzo Ferrari!</p>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End of Row for the cards -->
     </main>
     <!-- Include jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Your custom scripts -->
-    <script src="scripts.js"></script>
-    <script src="server.js"></script>
+    <script src="/public/scripts.js"></script>
+    <script src="/public/server.js"></script>
+    <script>
+        // Initialize modal and its trigger
+        $(document).ready(function () {
+            $('.modal').modal();
+            $('.modal-trigger').modal();
+        });
+    </script>
 </body>
 </html>
