@@ -27,7 +27,7 @@ async function runDBConnection() {
   }
 }
 
-app.get('/api/cards', (req, res) => {
+app.get('/api/Cluster1', (req, res) => {
   getAllCars((err, result) => {
     if (!err) {
       res.json({ statusCode: 200, data: result, message: "Managed to get all Cars!" });
@@ -37,7 +37,7 @@ app.get('/api/cards', (req, res) => {
   });
 });
 
-app.post('/api/Test.Cars', (req, res) => {
+app.post('/api/Cluster1', (req, res) => {
   let Cars = req.body;
   postCars(Cars, (err, result) => {
     if (!err) {
