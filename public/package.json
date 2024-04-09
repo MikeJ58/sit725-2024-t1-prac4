@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/MikeJ58/sit725-2023-t1-prac3.git#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0"
   }
 }

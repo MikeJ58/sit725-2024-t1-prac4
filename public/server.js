@@ -1,8 +1,7 @@
 var express = require("express")
 const { MongoClient, ServerApiVersion } = require('mongodb');
 var app = express()
-const url =
-  "mongodb+srv://dbUser:<Z6-HbE4Nrs7_e68>@cluster1.fopezw4.mongodb.net/"
+const url = "mongodb+srv://dbUser:<Z6-HbE4Nrs7_e68>@cluster1.fopezw4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 var port = process.env.port || 3000;
 let collection;
 app.use(express.static(__dirname + '/public'))
@@ -60,3 +59,4 @@ app.listen(3000, () => {
   console.log('express server started on port 3000');
   runDBConnection();
 })
+
