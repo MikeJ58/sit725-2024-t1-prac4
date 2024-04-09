@@ -2,7 +2,7 @@ var express = require("express")
 const { MongoClient, ServerApiVersion } = require('mongodb');
 var app = express()
 const url =
-  ""
+  "mongodb+srv://dbUser:<Z6-HbE4Nrs7_e68>@cluster1.fopezw4.mongodb.net/"
 var port = process.env.port || 3000;
 let collection;
 app.use(express.static(__dirname + '/public'))
@@ -18,7 +18,6 @@ const client = new MongoClient(url, {
 });
 
 async function runDBConnection() {
-
   try {
     // connect the client to the server (optional starting in v4.7)
     await client.connect();
