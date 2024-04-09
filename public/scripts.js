@@ -1,24 +1,3 @@
-const cardList = [
-    {
-        title: "Aston Martin",
-        image: "images/aston_martin.jpeg",
-        link: "About Car 1",
-        description: "Demo description about Car 1"
-    },
-    {
-        title: "Porche",
-        image: "images/ferarri.jpeg",
-        link: "About Car 2",
-        description: "Demo description about Car 2"
-    },
-    {
-        title: "Ferarri",
-        image: "images/porche.jpeg",
-        link: "About Car 3",
-        description: "Demo description about Car 3"
-    }
-];
-
 const addCards = (items) => {
     items.forEach(item => {
         let itemToAppend = `
@@ -41,49 +20,33 @@ const addCards = (items) => {
     });
 };
 
-const clickMe = () => {
-    alert("Thanks for clicking me. Hope you have a nice day!");
-};
-
 const submitForm = () => {
     let formData = {};
     formData.title = $('#title').val();
-    formData.color = $('#Color').val();
-    formData.path = $('#Path').val();
+    formData.image = $('#Image').val(); // Add image field
+    formData.link = $('#Link').val(); // Add link field
     formData.description = $('#Description').val();
-    console.log("Form Data Submitted: ", formData);
+    
+    // AJAX POST request to submit form data
+    $.post('/submit-form', formData, function(response) {
+        console.log("Form Data Submitted: ", formData);
+        // Add the new card to the card section
+        addCards([formData]);
+    }).fail(function(error) {
+        console.error("Error submitting form data: ", error);
+    });
 };
-
-$('#clickMeButton').click(function() {
-    $('#formSection').toggle(); // Toggle the visibility of the form
-});
 
 $(document).ready(function () {
     $('.modal').modal(); // Initialize modal
-});
 
-
-$('#carForm').submit(function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    $('#modalForm').modal('close'); // Close the modal
-    
-    // Call your function to handle form submission
-    submitForm();
-});
-
-const getProjects = () => {
-    $.get('/api/projects', (response) => {
-        if (response.statusCode == 200) {
-            addCards(response.data);
-        }
+    $('#clickMeButton').click(function() {
+        $('#formSection').toggle(); // Toggle the visibility of the form
     });
-};
 
-$(document).ready(function () {
-    $('.materialboxed').materialbox();
-    $('#formSubmit').click(() => {
-        submitForm();
+    $('#carForm').submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        $('#modalForm').modal('close'); // Close the modal
+        submitForm(); // Call the function to handle form submission
     });
-    addCards(cardList);
-    $('.modal').modal();
 });
