@@ -44,7 +44,7 @@
         </div>
         <div class="col s12 center-align">
           <a class="waves-effect waves-light btn click-me-button modal-trigger" id="clickMeButton" data-toggle='modal'
-            data-target="modal1"><i class="material-icons left">auto_fix_high</i>Click Me</a>
+            data-target="#modal1"><i class="material-icons left">auto_fix_high</i>Click Me</a>
         </div>
       </div>
       <div class="row" id="card-section">
@@ -68,7 +68,7 @@
         </div>
       </div>
       <!-- Modal Structure -->
-      <div id="modal1" class="modal modal-fixed-footer">
+      <div id="#modal1" class="modal modal-fixed-footer">
         <div class="row modal-content">
           <form class="col s12">
             <div class="row">
@@ -109,20 +109,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="scripts.js"></script>
   <script src="server.js"></script>
-<script type="text/JavaScript">
-  $(document).ready(function(){
-    $('.materialboxed').materialbox();
-    $('#submitForm').click(()=>{
-        console.log("Submit button clicked");
-        submitForm();
-    })
-    $('.click-me-button').click(() => {
-        console.log("Click me button clicked!");
-    });
-
-    getProjects();
-    $('.modal').modal();
-  });
+  <script type="text/JavaScript">
 </script>
 </body>
 </html>

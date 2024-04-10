@@ -1,69 +1,73 @@
-var express = require("express")
-var app = express()
-const { MongoClient, ServerApiVersion } = require('mongodb')
+const express = require("express");
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const path = require("path");
-var cors = require("cors")
-var port = process.env.port || 3000;
-let collection;
-require('dotenv').config()
+const cors = require("cors");
+const app = express();
+const port = process.env.PORT || 3000;
+require('dotenv').config();
 
 // Database Connection
+const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Test"; // Set your MongoDB URI here
+const client = new MongoClient(uri, { serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true } });
+let collection;
 
-const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Test";
-const client = new MongoClient(uri, { serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true, } });
-app.use(express.static(path.join(__dirname+'/public')));
+// Static file serving
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors())
+app.use(cors());
 
+// Database connection
 async function runDBConnection() {
     try {
         await client.connect();
-        collection = client.db().collection('Cars');
-        console.log(collection);
+        collection = client.db('Test').collection('Cars');
+        console.log("Database connected successfully");
     } catch (ex) {
-        console.error(ex);
+        console.error("Error connecting to the database:", ex);
     }
 }
 
+// Route to serve the HTML file
 app.get('/', (req, res) => {
-    res.render('/public/index.html');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// API endpoint to get all cars
+app.get('/api/cars', (req, res) => {
+    getAllCars((err, result) => {
+        if (err) {
+            res.status(500).json({ statusCode: 500, message: "Internal Server Error", error: err });
+        } else {
+            res.status(200).json({ statusCode: 200, message: "Success", data: result });
+        }
+    });
+});
 
-app.get('/api/cars',(req,res) => {
-    getProjects((err,result) => {
-        if(!err) {
-            res.json({statusCode: 400, data: result, message: err})
+// API endpoint to add a new car
+app.post('/api/cars', (req, res) => {
+    let car = req.body;
+    postCar(car, (err, result) => {
+        if (err) {
+            res.status(400).json({ statusCode: 400, message: "Bad Request", error: err });
+        } else {
+            res.status(201).json({ statusCode: 201, message: "Car added successfully", data: result });
         }
-        else {
-            res.json({statusCode: 200, message:"Success", data: result})
-        }
-    })
-})
+    });
+});
 
-app.post('/api/cars',(req,res) => {
-    console.log("New Project added", req.body)
-    var newProject = req.body;
-    insertProjects(newProject,(err,result) => {
-        if(err) {
-            res.json({statusCode: 400, message: err})
-        }
-        else {
-            res.json({statusCode: 200, message:"Project Successfully added", data: result})
-        }
-    })
-})
-
-function postCars(cars, callback) {
-    collection.insertOne(cars, callback);
+// Function to add a new car
+function postCar(car, callback) {
+    collection.insertOne(car, callback);
 }
 
+// Function to get all cars
 function getAllCars(callback) {
     collection.find({}).toArray(callback);
 }
 
-app.listen(3000, ()=>{
-    console.log("Express server started");
+// Start the server
+app.listen(port, () => {
+    console.log(`Express server started on port ${port}`);
     runDBConnection();
-})
+});
