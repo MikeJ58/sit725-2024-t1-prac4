@@ -46,6 +46,7 @@ const addCards = (items) => {
 $(document).ready(function(){
     $('.materialboxed').materialbox();
     $('#formSubmit').click(()=>{
+        console.log("Submit button clicked");
         submitForm();
     })
     $('.click-me-button').click(() => {
@@ -68,31 +69,6 @@ const addProjectToApp = (project) => {
     })
 }
 
-
-const getProjects = () => {
-    $.get('/api/projects',(response) => {
-        if(response.statusCode==200){
-            console.log(response)
-            addCards(response.data);
-        }
-        else {
-            console.log(response)
-        }
-    })
-}
-
-
-const addProjectToApp = (project) => {
-    $.ajax({
-        url: '/api/projects',
-        data: project,
-        type: 'POST',
-        success: (result) => {
-            alert(result.message);
-            location.reload();
-        }
-    })
-}
 
 const getProjects = () => {
     $.get('/api/projects',(response) => {

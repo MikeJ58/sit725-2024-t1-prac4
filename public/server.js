@@ -1,9 +1,10 @@
-require('dotenv').config()
 var express = require("express")
 var app = express()
+const path = require("path");
 var cors = require("cors")
 const MongoClient = require('mongodb').MongoClient;
 let projectCollection;
+require('dotenv').config()
 
 // Database Connection
 
@@ -11,7 +12,7 @@ const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Test
 const client = new MongoClient(uri,{ useNewUrlParser: true })
 
 
-app.use(express.static(__dirname+'/public'))
+app.use(express.static(path.join(__dirname+'/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
@@ -62,7 +63,8 @@ app.post('/api/projects',(req,res) => {
     })
 })
 
-var port = process.env.port || 8888;
+var port = process.env.port || 3000;
+
 
 app.listen(port,()=>{
     console.log("App running at http://localhost:"+port)
