@@ -1,48 +1,40 @@
 var express = require("express")
 var app = express()
+const { MongoClient, ServerApiVersion } = require('mongodb')
 const path = require("path");
 var cors = require("cors")
-const MongoClient = require('mongodb').MongoClient;
-let projectCollection;
+var port = process.env.port || 3000;
+let collection;
 require('dotenv').config()
 
 // Database Connection
 
-const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Test/Cars";
-const client = new MongoClient(uri,{ useNewUrlParser: true })
-
-
+const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Cars";
+const client = new MongoClient(uri, { serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true, } });
 app.use(express.static(path.join(__dirname+'/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 
-const createColllection = (collectionName) => {
-    client.connect((err,db) => {
-        projectCollection = client.db().collection(collectionName);
-        if(!err) {
-            console.log('MongoDB Connected')
-        }
-        else {
-            console.log("DB Error: ", err);
-            process.exit(1);
-        }
-    })
+async function runDBConnection() {
+    try {
+        await client.connect();
+        collection = client.db().collection('Cars');
+        console.log(collection);
+    } catch (ex) {
+        console.error(ex);
+    }
 }
 
-const insertProjects = (project,callback) => {
-    projectCollection.insert(project,callback);
-}
-
-const getProjects = (callback) => {
-    projectCollection.find({}).toArray(callback);
-}
+app.get('/', (req, res) => {
+    res.render('/public/index.html');
+});
 
 
-app.get('/api/projects',(req,res) => {
+app.get('/api/cars',(req,res) => {
     getProjects((err,result) => {
-        if(err) {
-            res.json({statusCode: 400, message: err})
+        if(!err) {
+            res.json({statusCode: 400, data: result, message: err})
         }
         else {
             res.json({statusCode: 200, message:"Success", data: result})
@@ -50,7 +42,7 @@ app.get('/api/projects',(req,res) => {
     })
 })
 
-app.post('/api/projects',(req,res) => {
+app.post('/api/cars',(req,res) => {
     console.log("New Project added", req.body)
     var newProject = req.body;
     insertProjects(newProject,(err,result) => {
@@ -63,9 +55,15 @@ app.post('/api/projects',(req,res) => {
     })
 })
 
-var port = process.env.port || 3000;
+function postCars(cars, callback) {
+    collection.insertOne(cars, callback);
+}
 
-app.listen(port,()=>{
-    console.log("App running at http://localhost:"+port)
-    createColllection("pets")
+function getAllCars(callback) {
+    collection.find({}).toArray(callback);
+}
+
+app.listen(3000, ()=>{
+    console.log("Express server started");
+    runDBConnection();
 })

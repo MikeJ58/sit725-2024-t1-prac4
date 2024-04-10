@@ -16,7 +16,9 @@
     "Materialize",
     "HTML",
     "JS",
-    "CSS"
+    "CSS",
+    "cors",
+    "dotenv"
   ],
   "author": "MikeJ58",
   "license": "MIT",
