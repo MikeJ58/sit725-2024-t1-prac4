@@ -1,77 +1,96 @@
-const express = require("express");
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const app = express();
-const url = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"; // Add your MongoDB connection URL
-const port = process.env.PORT || 3000;
-let collection;
+require('dotenv').config()
+var express = require("express")
+var app = express()
+var cors = require("cors")
+const MongoClient = require('mongodb').MongoClient;
+let projectCollection;
 
-app.use(express.static(__dirname + '/public'));
+// Database Connection
+
+const uri = "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PASSWORD+"@cluster1.fopezw4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1" // replace it with the url you get from mongo atlas
+const client = new MongoClient(uri,{ useNewUrlParser: true })
+
+
+app.use(express.static(__dirname+'/public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors())
 
-const client = new MongoClient(url, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function runDBConnection() {
-  try {
-    await client.connect();
-    collection = client.db().collection('Test.Cars');
-    console.log("Connected to MongoDB");
-  } catch (ex) {
-    console.error(ex);
-  }
-}
-
-app.get('/api/Cluster1', (req, res) => {
-  getAllCars((err, result) => {
-    if (!err) {
-      res.json({ statusCode: 200, data: result, message: "Managed to get all Cars!" });
-    } else {
-      res.status(500).json({ statusCode: 500, message: "Failed to get all Cars", error: err });
-    }
-  });
-});
-
-app.post('/api/Cluster1', (req, res) => {
-  let Cars = req.body;
-  postCars(Cars, (err, result) => {
-    if (!err) {
-      res.status(201).json({ statusCode: 201, data: result, message: 'Cars added successfully' });
-    } else {
-      res.status(500).json({ statusCode: 500, message: 'Failed to add Cars', error: err });
-    }
-  });
-});
-
-function postCars(Cars, callback) {
-  collection.insertOne(Cars, callback);
-}
-
-function getAllCars(callback) {
-  collection.find({}).toArray(callback);
-}
-
-app.post('/submit-form', (req, res) => {
-  const formData = req.body;
-
-  // Insert the form data into the MongoDB collection
-  collection.insertOne(formData)
-    .then(result => {
-      console.log('Form data inserted:', result);
-      res.status(200).send('Form data inserted successfully');
+const createColllection = (collectionName) => {
+    client.connect((err,db) => {
+        projectCollection = client.db().collection(collectionName);
+        if(!err) {
+            console.log('MongoDB Connected')
+        }
+        else {
+            console.log("DB Error: ", err);
+            process.exit(1);
+        }
     })
-    .catch(err => {
-      console.error('Error inserting form data:', err);
-      res.status(500).send('Error inserting form data');
-    });
-});
+}
 
-app.listen(port, () => {
-  console.log(`Express server started on port ${port}`);
-  runDBConnection();
-});
+const insertProjects = (project,callback) => {
+    projectCollection.insert(project,callback);
+}
+
+const getProjects = (callback) => {
+    projectCollection.find({}).toArray(callback);
+}
+
+const cardList = [
+    {
+        title: "Porsche",
+        image: "images/porche.jpg",
+        link: "About Porsche",
+        description: "Porsche, is a German automobile manufacturer specializing in high-performance sports cars, SUVs and sedans. It is made in Germany."
+    },
+    {
+        title: "Ferrari",
+        image: "images/ferrari.jpeg",
+        link: "About Ferarri",
+        description: "This is the Ferarri, it is an Italian luxury sports car manufacturer based in Maranello, Italy. Founded in 1939 by Enzo Ferrari!"
+    }
+]
+app.get('/api/projects',(req,res) => {
+    getProjects((err,result) => {
+        if(err) {
+            res.json({statusCode: 400, message: err})
+        }
+        else {
+            res.json({statusCode: 200, message:"Success", data: result})
+        }
+    })
+})
+
+app.post('/api/projects',(req,res) => {
+    console.log("New Project added", req.body)
+    var newProject = req.body;
+    insertProjects(newProject,(err,result) => {
+        if(err) {
+            res.json({statusCode: 400, message: err})
+        }
+        else {
+            res.json({statusCode: 200, message:"Project Successfully added", data: result})
+        }
+    })
+})
+const addNumbers = (number1, number2) => {
+    var num1 = parseInt(number1)
+    var num2 = parseInt(number2)
+    var result = num1 + num2;
+    return result;
+}
+
+app.get("/addTwoNumbers",(req,res) => {
+    var number1 = req.query.number1;
+    var number2 = req.query.number2;
+    var result = addNumbers(number1,number2)
+    res.json({statusCode: 200, data: result, message:"Success"})
+})
+
+var port = process.env.port || 3000;
+
+app.listen(port,()=>{
+    console.log("App running at http://localhost:"+port)
+    createColllection("pets")
+})
