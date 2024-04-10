@@ -62,7 +62,8 @@ app.post('/api/projects',(req,res) => {
     })
 })
 
-var port = process.env.port || 8888;
+var port = process.env.port || 3000;
+const uri = process.env.DB_URI;
 
 app.listen(port,()=>{
     console.log("App running at http://localhost:"+port)
