@@ -19,7 +19,7 @@ app.use(cors())
 async function runDBConnection() {
     try {
         await client.connect();
-        collection = client.db().collection('Cars');
+        collection = client.db().collection('Test');
         console.log(collection);
     } catch (ex) {
         console.error(ex);
