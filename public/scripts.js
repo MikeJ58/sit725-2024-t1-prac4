@@ -43,19 +43,7 @@ const addCards = (items) => {
     });
 }
 
-$(document).ready(function(){
-    $('.materialboxed').materialbox();
-    $('#formSubmit').click(()=>{
-        console.log("Submit button clicked");
-        submitForm();
-    })
-    $('.click-me-button').click(() => {
-        console.log("Click me button clicked!");
-    });
 
-    getProjects();
-    $('.modal').modal();
-  });
 
 const addProjectToApp = (project) => {
     $.ajax({
