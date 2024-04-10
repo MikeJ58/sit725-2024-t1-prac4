@@ -9,7 +9,7 @@ require('dotenv').config()
 
 // Database Connection
 
-const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Cars";
+const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Test";
 const client = new MongoClient(uri, { serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true, } });
 app.use(express.static(path.join(__dirname+'/public')));
 app.use(express.json());
@@ -19,7 +19,7 @@ app.use(cors())
 async function runDBConnection() {
     try {
         await client.connect();
-        collection = client.db().collection('Test');
+        collection = client.db().collection('Cars');
         console.log(collection);
     } catch (ex) {
         console.error(ex);
