@@ -25,7 +25,11 @@
   },
   "homepage": "https://github.com/MikeJ58/sit725-2023-t1-prac3.git#readme",
   "dependencies": {
+    "connect": "^3.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongodb": "^6.5.0"
+    "mongodb": "^6.5.0",
+    "serve-static": "^1.15.0"
   }
 }

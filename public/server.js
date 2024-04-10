@@ -7,7 +7,7 @@ let projectCollection;
 
 // Database Connection
 
-const uri = "mongodb+srv://"+process.env.dbUser+":"+process.env.SimplePlan89+"@cluster1.fopezw4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1" // replace it with the url you get from mongo atlas
+const uri = "mongodb+srv://dbUser:SimplePlan89@cluster1.fopezw4.mongodb.net/Test/Cars";
 const client = new MongoClient(uri,{ useNewUrlParser: true })
 
 
@@ -37,20 +37,7 @@ const getProjects = (callback) => {
     projectCollection.find({}).toArray(callback);
 }
 
-const cardList = [
-    {
-        title: "Porsche",
-        image: "images/porche.jpg",
-        link: "About Porsche",
-        description: "Porsche, is a German automobile manufacturer specializing in high-performance sports cars, SUVs and sedans. It is made in Germany."
-    },
-    {
-        title: "Ferrari",
-        image: "images/ferrari.jpeg",
-        link: "About Ferarri",
-        description: "This is the Ferarri, it is an Italian luxury sports car manufacturer based in Maranello, Italy. Founded in 1939 by Enzo Ferrari!"
-    }
-]
+
 app.get('/api/projects',(req,res) => {
     getProjects((err,result) => {
         if(err) {
@@ -75,7 +62,7 @@ app.post('/api/projects',(req,res) => {
     })
 })
 
-var port = process.env.port || 3000;
+var port = process.env.port || 8888;
 
 app.listen(port,()=>{
     console.log("App running at http://localhost:"+port)

@@ -1,3 +1,18 @@
+const cardList = [
+    {
+        title: "Porsche",
+        image: "images/porche.jpg",
+        link: "About Porsche",
+        description: "Porsche, is a German automobile manufacturer specializing in high-performance sports cars, SUVs and sedans. It is made in Germany."
+    },
+    {
+        title: "Ferrari",
+        image: "images/ferrari.jpeg",
+        link: "About Ferarri",
+        description: "This is the Ferarri, it is an Italian luxury sports car manufacturer based in Maranello, Italy. Founded in 1939 by Enzo Ferrari!"
+    }
+]
+
 const clickMe = () => {
     alert("Thanks for clicking me. Hope you have a nice day!")
 }
@@ -59,6 +74,10 @@ $(document).ready(function(){
     $('#formSubmit').click(()=>{
         submitForm();
     })
+    $('.click-me-button').click(() => {
+        console.log("Click me button clicked!");
+    });
+
     getProjects();
     $('.modal').modal();
   });
